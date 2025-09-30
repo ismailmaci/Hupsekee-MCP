@@ -1,0 +1,6 @@
+services:
+  chess-mcp:
+    build: .
+    container_name: chess-mcp
+    volumes:
+      - ./logs:/app/logs

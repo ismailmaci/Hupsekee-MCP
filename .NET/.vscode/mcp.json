@@ -1,0 +1,41 @@
+{
+  "servers": {
+    "chess-stats": {
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "GitHub\\hupsekee-mcp\\.NET\\TogglMCP.csproj"
+      ],
+      "env": {
+        "DOTNET_ENVIRONMENT": "Production"
+      }
+    },
+    "toggl": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "--name",
+        "hupsekee-mcp",
+        "hupsekee-mcp-toggl-mcp-server:latest"
+      ]
+    },
+    "toggl2": {
+      "command": "docker-compose",
+      "args": [
+        "-f",
+        "hupsekee-mcp\\docker-compose.yml",
+        "run",
+        "--rm",
+        "toggl-mcp-server"
+      ],
+      "cwd": "hupsekee-mcp"
+    },
+    "toggl3": {
+      "type": "http",
+      "url": "http://localhost:8080/toggl"
+    }
+  }
+}

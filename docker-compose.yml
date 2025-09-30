@@ -1,0 +1,25 @@
+services:
+  toggl-mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: toggl-mcp-server
+    restart: unless-stopped
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+    ports:
+      - "8080:8080"
+    stdin_open: true
+    tty: true
+    networks:
+      - mcp-network
+    healthcheck:
+      test: ["CMD", "ps", "aux", "|", "grep", "dotnet"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+networks:
+  mcp-network:
+    driver: bridge
