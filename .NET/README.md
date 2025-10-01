@@ -1,85 +1,112 @@
-# Toggl MCP Server (.NET)
+# Chess.com MCP Server
 
-A Model Context Protocol (MCP) server that provides access to the Toggl Track API for time tracking operations.
+A Model Context Protocol (MCP) server that provides chess player statistics from Chess.com.
 
-## Features
+## Prerequisites
+- Java 21+
+- Docker
+- VS Code with MCP support
 
-- Get workspaces and projects
-- Retrieve time entries (current and historical)
-- Create and manage time entries
-- Start and stop timers
-- Update and delete time entries
+## 🛠️ Development Setup
 
-## Configuration
+1. **Clone and setup**:
+   ```bash
+   git clone <repository-url>
+   cd chessdotcom-mcp-server/Java
+   ```
 
-### API Token Setup
+2. **How to Run**:
+   
+   To run application:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
 
-To use this MCP server, you need to provide your Toggl Track API token. There are two ways to do this:
+    Tests can be run with:
+    ```bash
+    ./mvnw test
+    ```
 
-#### Method 1: Environment Variable (Recommended)
+    Code formatting (Spotless):
+    ```bash
+    ./mvnw spotless:apply    # Format code
+    ./mvnw spotless:check    # Check formatting
+    ```
 
-1. Get your API token from [Toggl Track Profile Settings](https://track.toggl.com/profile)
-2. Set the `TOGGL_API_TOKEN` environment variable in your MCP configuration
+## 📋 VS Code MCP Configuration
 
-**Example MCP Configuration:**
+The `.vscode/mcp.json` is pre-configured with two options:
 
-```json
+- **`chess-mcp-dev`** - Runs maven directly, for local development
+- **`chess-mcp`** - Uses a docker image, to be used everywhere
+
+1. **Build Docker image**:
+   ```bash
+   cd Java
+   docker build -t chess-mcp:latest .
+   ```
+
+## 🔧 Available Tools
+
+**`get_chess_player_stats`**
+- **Input**: Chess.com username
+- **Output**: Player ratings, records, and statistics across all game modes
+    ```
+    Chess Player Statistics Summary for hikaru:
+    • Rapid: 2839 (W:201 L:67 D:209)
+    • Blitz: 3384 (W:32466 L:5193 D:4076)  
+    • Bullet: 3348 (W:15697 L:2163 D:1004)
+    • Daily: 2239 (W:73 L:11 D:4)
+    ```
+- **Usage**:
+  - "Get chess stats for Magnus Carlsen"
+  - "What's Hikaru's chess rating?"
+  - "Show me chess statistics for any Chess.com username"
+
+## MCP connection configuration
+This list provides various methods to connect to the same MCP server. Note that http is only available if you configure your MCP is an http-based server.
+
+```
 {
   "servers": {
-    "toggl-mcp-dotnet": {
+    "chess-stats": {
       "command": "dotnet",
       "args": [
         "run",
         "--project",
-        "path/to/TogglMCP.csproj"
+        "GitHub\\hupsekee-mcp\\.NET\\ChessMCP.csproj"
       ],
       "env": {
         "DOTNET_ENVIRONMENT": "Production",
-        "TOGGL_API_TOKEN": "your_actual_api_token_here"
       }
+    },
+    "chess": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "--name",
+        "hupsekee-mcp",
+        "hupsekee-mcp-chess-mcp-server:latest"
+      ]
+    },
+    "chess2": {
+      "command": "docker-compose",
+      "args": [
+        "-f",
+        "hupsekee-mcp\\docker-compose.yml",
+        "run",
+        "--rm",
+        "chess-mcp-server"
+      ],
+      "cwd": "hupsekee-mcp"
+    },
+    "chess3": {
+      "type": "http",
+      "url": "http://localhost:8080/" -- or whatever port you are running on
     }
   }
 }
-```
-
-#### Method 2: Runtime Token Setting
-
-If you can't set the environment variable, you can use the `set_toggl_api_token` tool after the server starts:
 
 ```
-set_toggl_api_token("your_actual_api_token_here")
-```
-
-**Note:** The environment variable method is more secure and recommended for production use.
-
-## Available Tools
-
-- `get_workspaces` - Get all available Toggl workspaces
-- `get_projects` - Get all projects in a specific workspace
-- `get_time_entries` - Get time entries with optional date filtering
-- `get_current_time_entry` - Get the currently running timer (if any)
-- `create_time_entry` - Create a new time entry
-- `start_timer` - Start a new timer with description and optional project/tags
-- `stop_timer` - Stop the currently running timer
-- `update_time_entry` - Update an existing time entry
-- `delete_time_entry` - Delete a time entry
-- `set_toggl_api_token` - Set API token at runtime (not recommended for production)
-
-## Getting Your Toggl API Token
-
-1. Log in to [Toggl Track](https://track.toggl.com/)
-2. Go to Profile Settings (click on your profile picture → Profile settings)
-3. Scroll down to find your API token
-4. Copy the token and use it in your configuration
-
-## Security Notes
-
-- Never commit your API token to version control
-- Use environment variables to store sensitive credentials
-- The `set_toggl_api_token` tool is provided for convenience but environment variables are preferred
-- Your API token provides full access to your Toggl account, so keep it secure
-
-## Requirements
-
-- .NET 8.0 or later
-- Valid Toggl Track account and API token
