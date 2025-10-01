@@ -7,8 +7,8 @@
     <Nullable>enable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-    <AssemblyName>TogglMcpServer</AssemblyName>
-    <RootNamespace>TogglMCP</RootNamespace>
+    <AssemblyName>ChessMcpServer</AssemblyName>
+    <RootNamespace>ChessMCP</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

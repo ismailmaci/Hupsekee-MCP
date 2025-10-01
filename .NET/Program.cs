@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using TogglMCP.Services;
-using TogglMCP.Tools;
+using ChessMCP.Services;
+using ChessMCP.Tools;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -11,18 +11,18 @@ builder.Logging.AddConsole(consoleLogOptions =>
     consoleLogOptions.LogToStandardErrorThreshold = LogLevel.Trace;
 });
 
-builder.Services.AddHttpClient<TogglApiService>(client =>
+builder.Services.AddHttpClient<ChessStatsService>(client =>
 {
-    client.DefaultRequestHeaders.Add("User-Agent", "Toggl MCP Server 1.0");
+    client.DefaultRequestHeaders.Add("User-Agent", "Chess MCP Server 1.0");
     client.Timeout = TimeSpan.FromSeconds(30);
 });
 
 builder.Services
     .AddMcpServer()
     .WithStdioServerTransport()
-    .WithTools<TogglTools>();
+    .WithTools<ChessTools>();
 
-builder.Services.AddScoped<TogglTools>();
+builder.Services.AddScoped<ChessTools>();
 
 var host = builder.Build();
 

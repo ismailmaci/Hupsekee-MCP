@@ -5,13 +5,13 @@
       "args": [
         "run",
         "--project",
-        "GitHub\\hupsekee-mcp\\.NET\\TogglMCP.csproj"
+        "GitHub\\hupsekee-mcp\\.NET\\ChessMCP.csproj"
       ],
       "env": {
-        "DOTNET_ENVIRONMENT": "Production"
+        "DOTNET_ENVIRONMENT": "Production",
       }
     },
-    "toggl": {
+    "chess": {
       "command": "docker",
       "args": [
         "run",
@@ -19,23 +19,23 @@
         "-i",
         "--name",
         "hupsekee-mcp",
-        "hupsekee-mcp-toggl-mcp-server:latest"
+        "hupsekee-mcp-chess-mcp-server:latest"
       ]
     },
-    "toggl2": {
+    "chess2": {
       "command": "docker-compose",
       "args": [
         "-f",
         "hupsekee-mcp\\docker-compose.yml",
         "run",
         "--rm",
-        "toggl-mcp-server"
+        "chess-mcp-server"
       ],
       "cwd": "hupsekee-mcp"
     },
-    "toggl3": {
+    "chess3": {
       "type": "http",
-      "url": "http://localhost:8080/toggl"
+      "url": "http://localhost:8080/"
     }
   }
 }

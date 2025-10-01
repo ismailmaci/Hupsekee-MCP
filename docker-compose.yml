@@ -1,9 +1,9 @@
 services:
-  toggl-mcp-server:
+  chess-mcp-server:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: toggl-mcp-server
+    container_name: chess-mcp-server
     restart: unless-stopped
     environment:
       - DOTNET_ENVIRONMENT=Production

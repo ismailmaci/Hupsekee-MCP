@@ -1,15 +1,15 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-COPY .NET/TogglMCP.csproj ./
-RUN dotnet restore TogglMCP.csproj
+COPY .NET/ChessMCP.csproj ./
+RUN dotnet restore ChessMCP.csproj
 
 COPY .NET/Program.cs ./
 COPY .NET/Models/ ./Models/
 COPY .NET/Services/ ./Services/
 COPY .NET/Tools/ ./Tools/
 
-RUN dotnet publish TogglMCP.csproj -c Release -o out
+RUN dotnet publish ChessMCP.csproj -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/runtime:9.0 AS runtime
 WORKDIR /app
@@ -29,4 +29,4 @@ ENV ASPNETCORE_URLS=http://+:8080
 RUN useradd -m -u 1001 mcpuser && chown -R mcpuser:mcpuser /app
 USER mcpuser
 
-ENTRYPOINT ["dotnet", "TogglMcpServer.dll"]
+ENTRYPOINT ["dotnet", "ChessMcpServer.dll"]
