@@ -67,3 +67,38 @@ public record PuzzleRushBest(
     [property: JsonPropertyName("score")] int Score,
     [property: JsonPropertyName("date")] long Date
 );
+
+public record ChessPlayerClubs(
+    [property: JsonPropertyName("clubs")] ClubInfo[] Clubs
+);
+
+public record ClubInfo(
+    [property: JsonPropertyName("@id")] string Id,
+    [property: JsonPropertyName("name")] string Name,
+    [property: JsonPropertyName("last_activity")] long LastActivity,
+    [property: JsonPropertyName("joined")] long Joined,
+    [property: JsonPropertyName("icon")] string? Icon = null,
+    [property: JsonPropertyName("url")] string? Url = null
+);
+
+public record ChessPlayerDailyGames(
+    [property: JsonPropertyName("games")] DailyGameInfo[] Games
+);
+
+public record DailyGameInfo(
+    [property: JsonPropertyName("white")] string White,
+    [property: JsonPropertyName("black")] string Black,
+    [property: JsonPropertyName("url")] string Url,
+    [property: JsonPropertyName("fen")] string Fen,
+    [property: JsonPropertyName("pgn")] string Pgn,
+    [property: JsonPropertyName("turn")] string Turn,
+    [property: JsonPropertyName("move_by")] long MoveBy,
+    [property: JsonPropertyName("last_activity")] long LastActivity,
+    [property: JsonPropertyName("start_time")] long StartTime,
+    [property: JsonPropertyName("time_control")] string TimeControl,
+    [property: JsonPropertyName("time_class")] string TimeClass,
+    [property: JsonPropertyName("rules")] string Rules,
+    [property: JsonPropertyName("draw_offer")] string? DrawOffer = null,
+    [property: JsonPropertyName("tournament")] string? Tournament = null,
+    [property: JsonPropertyName("match")] string? Match = null
+);
