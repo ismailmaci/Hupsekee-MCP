@@ -1,6 +1,12 @@
 {
     "servers": {
-        "chess-mcp": {
+        "java-chess-mcp-dev": {
+            "type": "stdio",
+            "command": "./mvnw",
+            "args": ["spring-boot:run"],
+            "cwd": "./Java"
+        },
+        "java-chess-mcp-docker": {
             "type": "stdio",
             "command": "docker",
             "args": [
@@ -10,11 +16,39 @@
                 "chess-mcp:latest"
             ]
         },
-        "chess-mcp-dev": {
-            "type": "stdio",
-            "command": "./mvnw",
-            "args": ["spring-boot:run"],
-            "cwd": "./Java"
+        "net-chess-dev": {
+            "command": "dotnet",
+            "args": [
+                "run",
+                "--project",
+                "ChessMCP.csproj"
+            ],
+            "env": {
+                "DOTNET_ENVIRONMENT": "Production",
+            },
+            "cwd": "./.NET"
+        },
+        "net-chess-docker": {
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-i",
+                "--name",
+                "chess-mcp-server",
+                "net-chess-mcp-server:latest"
+            ],
+        },
+        "net-chess-compose": {
+            "command": "docker-compose",
+            "args": [
+                "-f",
+                "docker-compose.yml",
+                "run",
+                "--rm",
+                "chess-mcp-server"
+            ],
+            "cwd": "./.NET"
         }
     }
 }

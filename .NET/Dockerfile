@@ -1,13 +1,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-COPY .NET/ChessMCP.csproj ./
+COPY ChessMCP.csproj ./
 RUN dotnet restore ChessMCP.csproj
 
-COPY .NET/Program.cs ./
-COPY .NET/Models/ ./Models/
-COPY .NET/Services/ ./Services/
-COPY .NET/Tools/ ./Tools/
+COPY Program.cs ./
+COPY Models/ ./Models/
+COPY Services/ ./Services/
+COPY Tools/ ./Tools/
 
 RUN dotnet publish ChessMCP.csproj -c Release -o out
 

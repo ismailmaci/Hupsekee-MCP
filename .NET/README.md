@@ -3,7 +3,7 @@
 A Model Context Protocol (MCP) server that provides chess player statistics from Chess.com.
 
 ## Prerequisites
-- Java 21+
+- .NET 9.0+
 - Docker
 - VS Code with MCP support
 
@@ -12,38 +12,33 @@ A Model Context Protocol (MCP) server that provides chess player statistics from
 1. **Clone and setup**:
    ```bash
    git clone <repository-url>
-   cd chessdotcom-mcp-server/Java
+   cd chessdotcom-mcp-server/.NET
    ```
 
 2. **How to Run**:
    
    To run application:
    ```bash
-   ./mvnw spring-boot:run
+   dotnet run
    ```
 
-    Tests can be run with:
-    ```bash
-    ./mvnw test
-    ```
 
-    Code formatting (Spotless):
+    Build the project:
     ```bash
-    ./mvnw spotless:apply    # Format code
-    ./mvnw spotless:check    # Check formatting
+    dotnet build
     ```
 
 ## 📋 VS Code MCP Configuration
 
 The `.vscode/mcp.json` is pre-configured with two options:
 
-- **`chess-mcp-dev`** - Runs maven directly, for local development
+- **`chess-mcp-dev`** - Runs dotnet directly, for local development
 - **`chess-mcp`** - Uses a docker image, to be used everywhere
 
 1. **Build Docker image**:
    ```bash
-   cd Java
-   docker build -t chess-mcp:latest .
+   cd .NET
+   docker build -t chess-mcp-server:latest .
    ```
 
 ## 🔧 Available Tools
@@ -65,48 +60,44 @@ The `.vscode/mcp.json` is pre-configured with two options:
 
 ## MCP connection configuration
 This list provides various methods to connect to the same MCP server. Note that http is only available if you configure your MCP is an http-based server.
+During development, use the dotnet command for fast testing.
 
-```
+```json
 {
   "servers": {
-    "chess-stats": {
+    "chess-stats-dotnet": {
       "command": "dotnet",
       "args": [
         "run",
         "--project",
-        "GitHub\\hupsekee-mcp\\.NET\\ChessMCP.csproj"
+        "path/to/hupsekee-mcp/.NET/ChessMCP.csproj"
       ],
       "env": {
-        "DOTNET_ENVIRONMENT": "Production",
+        "DOTNET_ENVIRONMENT": "Production"
       }
     },
-    "chess": {
+    "chess-dotnet": {
       "command": "docker",
       "args": [
         "run",
         "--rm",
         "-i",
         "--name",
-        "hupsekee-mcp",
-        "hupsekee-mcp-chess-mcp-server:latest"
+        "hupsekee-mcp-dotnet",
+        "chess-mcp:latest"
       ]
     },
-    "chess2": {
+    "chess-dotnet-compose": {
       "command": "docker-compose",
       "args": [
         "-f",
-        "hupsekee-mcp\\docker-compose.yml",
+        "path/to/hupsekee-mcp/.NET/docker-compose.yml",
         "run",
         "--rm",
         "chess-mcp-server"
       ],
-      "cwd": "hupsekee-mcp"
-    },
-    "chess3": {
-      "type": "http",
-      "url": "http://localhost:8080/" -- or whatever port you are running on
+      "cwd": "path/to/hupsekee-mcp/.NET"
     }
   }
 }
-
 ```
