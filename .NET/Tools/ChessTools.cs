@@ -36,9 +36,11 @@ public class ChessTools(ChessStatsService chessStatsService)
         };
     }
 
+    //Add a tool that gets the clubs of a player from chess.com
+    //https://api.chess.com/pub/player/{username}/clubs
 
-
-
+    //Add a tool that gets the live daily games of a player from chess.com
+    //https://api.chess.com/pub/player/{username}/games
 
     private static string CreateStatsSummary(ChessPlayerStats stats)
     {
@@ -46,45 +48,39 @@ public class ChessTools(ChessStatsService chessStatsService)
         {
             $"Chess Player Statistics Summary:"
         };
-        
+
         if (stats.ChessRapid?.Last != null)
         {
             summary.Add($"• Rapid: {stats.ChessRapid.Last.RatingValue} (W:{stats.ChessRapid.Record?.Win} L:{stats.ChessRapid.Record?.Loss} D:{stats.ChessRapid.Record?.Draw})");
         }
-        
+
         if (stats.ChessBlitz?.Last != null)
         {
             summary.Add($"• Blitz: {stats.ChessBlitz.Last.RatingValue} (W:{stats.ChessBlitz.Record?.Win} L:{stats.ChessBlitz.Record?.Loss} D:{stats.ChessBlitz.Record?.Draw})");
         }
-        
+
         if (stats.ChessBullet?.Last != null)
         {
             summary.Add($"• Bullet: {stats.ChessBullet.Last.RatingValue} (W:{stats.ChessBullet.Record?.Win} L:{stats.ChessBullet.Record?.Loss} D:{stats.ChessBullet.Record?.Draw})");
         }
-        
+
         if (stats.ChessDaily?.Last != null)
         {
             summary.Add($"• Daily: {stats.ChessDaily.Last.RatingValue} (W:{stats.ChessDaily.Record?.Win} L:{stats.ChessDaily.Record?.Loss} D:{stats.ChessDaily.Record?.Draw})");
         }
-        
+
         if (stats.Tactics?.Highest != null)
         {
             summary.Add($"• Tactics: {stats.Tactics.Highest.Rating} (highest)");
         }
-        
+
         if (stats.PuzzleRush?.Best != null)
         {
             summary.Add($"• Puzzle Rush: {stats.PuzzleRush.Best.Score} (best score)");
         }
-        
+
         return string.Join("\n", summary);
     }
-
-
-
-
-
-
 }
 
 public class ChessPlayerStatsResult

@@ -54,6 +54,12 @@ public class ChessTools {
     }
   }
 
+    //Add a tool that gets the clubs of a player from chess.com
+    //https://api.chess.com/pub/player/{username}/clubs
+
+    //Add a tool that gets the live daily games of a player from chess.com
+    //https://api.chess.com/pub/player/{username}/games
+
   /** Creates a human-readable summary of chess player statistics */
   private String createStatsSummary(String username, ChessPlayerStats stats) {
     List<String> summary = new ArrayList<>();
