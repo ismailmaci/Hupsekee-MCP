@@ -36,6 +36,12 @@ public class ChessTools(ChessStatsService chessStatsService)
         };
     }
 
+    //Add a tool that gets the clubs of a player from chess.com
+    //https://api.chess.com/pub/player/{username}/clubs
+
+    //Add a tool that gets the live daily games of a player from chess.com
+    //https://api.chess.com/pub/player/{username}/games
+
     private static string CreateStatsSummary(ChessPlayerStats stats)
     {
         var summary = new List<string>
