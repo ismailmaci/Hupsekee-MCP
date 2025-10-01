@@ -8,6 +8,9 @@ COPY mvnw mvnw.cmd pom.xml ./
 COPY .mvn .mvn
 RUN chmod +x mvnw
 
+# Fix lineendings for windows
+RUN dos2unix ./*
+
 # Download dependencies for better caching
 RUN ./mvnw dependency:go-offline -B
 
